@@ -9,7 +9,6 @@ const ClothData = (props) => {
    colour,
    price
    } = prodData;
-
     return (
         <div>
 

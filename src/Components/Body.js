@@ -4,6 +4,7 @@ import { options, url } from "./Constants";
 
 const Body = () => {
  const [cardData, SetCardData] = useState([]);
+ const [filterCard, SetFilterCard] = useState([]);
  const [searchText, SetSearchText] = useState("");
   useEffect(() => {
     fetchData();
@@ -14,6 +15,7 @@ const fetchData = async () => {
  const json = await data.json();
  console.log(json);
  SetCardData(json?.products);
+ SetFilterCard(json?.products);
 }
 
   return (
@@ -23,13 +25,14 @@ const fetchData = async () => {
         onChange={(e) => {
           SetSearchText(e.target.value)}} aria-label="Search"/>
         <button className="btn btn-outline-success" onClick={() => {
-      
+        const filterCard = cardData.filter((p) => p.name.toUpperCase().includes(searchText.toUpperCase()));
+        SetFilterCard(filterCard);
         }} type="submit">Search</button>
       </form>
 
  <div className="cardInfo">
    {
-cardData.map((prod) => <li key= {prod.id} >
+filterCard.map((prod) => <li key= {prod.id} >
 <ClothData prodData={prod}/>
 </li>)
    }
